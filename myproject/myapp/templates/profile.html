@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Profile Image Section -->
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <div class="profile-image-wrapper mb-4">
+                        {% if request.user.profile.profile_image %}
+                            <img src="{{ request.user.profile.profile_image.url }}" alt="Profile Image" class="rounded-circle img-thumbnail" width="150" height="150">
+                        {% else %}
+                            <img src="/static/images/default_profile.png" alt="Default Profile Image" class="rounded-circle img-thumbnail" width="150" height="150">
+                        {% endif %}
+                    </div>
+                    <h4 class="text-secondary mb-0">{{ request.user.username }}</h4>
+                    <p class="text-muted">{{ request.user.email }}</p>
+                </div>
+            </div>
+            <!-- Update Form Section -->
+            <div class="card mt-4 shadow-sm">
+                <div class="card-body">
+                    <h2 class="text-center">Update Profile</h2>
+                    <form method="POST" enctype="multipart/form-data" class="mt-4">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5 class="text-primary">Account Information</h5>
+                                <hr>
+                                {{ user_form.as_p }}
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="text-primary">Profile Information</h5>
+                                <hr>
+                                {{ profile_form.as_p }}
+                            </div>
+                        </div>
+                        <div class="form-group text-center mt-4">
+                            <button class="btn btn-primary btn-lg px-5" type="submit">Update Profile</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .profile-image-wrapper {
+        position: relative;
+    }
+
+    .profile-image-wrapper img {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card {
+        border: none;
+    }
+
+    .card-body {
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 20px;
+    }
+
+    .btn-primary {
+        background-color: #0095f6;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #0077c8;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Data</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Stock Data for {{ stock_data.symbol }}</h1>
+        <p>Date: {{ stock_data.date }}</p>
+        <p>Open: {{ stock_data.open }}</p>
+        <p>High: {{ stock_data.high }}</p>
+        <p>Low: {{ stock_data.low }}</p>
+        <p>Close: {{ stock_data.close }}</p>
+        <p>Volume: {{ stock_data.volume }}</p>
+
+        {% if error %}
+            <p>Error: {{ error }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>

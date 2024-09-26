@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+   {% block title %}Nifty Bank Stocks{% endblock %}
+   
+   {% block content %}
+    <div class="container mt-4">
+        <h1>Nifty Bank Stock Data</h1>
+        
+        {% if nifty_bank_data %}
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Date</th>
+                        <th>Open</th>
+                        <th>High</th>
+                        <th>Low</th>
+                        <th>Close</th>
+                        <th>Volume</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stock in nifty_bank_data %}
+                    <tr>
+                        <td>{{ stock.symbol }}</td>
+                        <td>{{ stock.date }}</td>
+                        <td>{{ stock.open }}</td>
+                        <td>{{ stock.high }}</td>
+                        <td>{{ stock.low }}</td>
+                        <td>{{ stock.close }}</td>
+                        <td>{{ stock.volume }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No data available.</p>
+        {% endif %}
+
+        {% if error %}
+            <p>Error: {{ error }}</p>
+        {% endif %}
+    </div>
+    {% endblock %}

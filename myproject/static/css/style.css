@@ -1,0 +1,68 @@
+/* style.css */
+
+body { 
+    font-family: Arial, sans-serif; 
+    margin: 0; 
+    padding: 0; 
+    background-color: #f8f9fa; 
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+.dropdown-menu a {
+    color: #333 !important;
+}
+
+.nav-item .nav-link {
+    color: white !important;
+}
+
+main { 
+    padding: 20px; 
+}
+
+
+footer {
+    background-color: #343a40;
+    color: #ffffff;
+}
+
+footer p {
+    margin: 0;
+}
+
+footer .fab {
+    font-size: 1.5rem;
+}
+
+footer a {
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #dddddd;
+}
+
+/* Custom Styles for Signup Form */
+.card {
+    border-radius: 16px;
+    border: none;
+}
+
+.form-floating .form-control {
+    padding: 1.5rem 0.75rem;
+}
+
+.form-floating label {
+    padding-left: 0.75rem;
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+.form-floating .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+}
