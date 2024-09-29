@@ -1,4 +1,0 @@
-django admin id password
-
-id : mahen
-password : Mahen@123
