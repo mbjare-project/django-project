@@ -21,3 +21,32 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
         Profile.objects.create(user=instance)
     else:
         instance.profile.save()
+
+
+# Post Model
+class Post(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    image = models.ImageField(upload_to='posts/', blank=True, null=True)  # Optional image
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Post by {self.user.username}'
+
+# Comment Model
+class Comment(models.Model):
+    post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Comment by {self.user.username} on {self.post.id}'
+
+# Like Model
+class Like(models.Model):
+    post = models.ForeignKey(Post, related_name='likes', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'Like by {self.user.username} on {self.post.id}'

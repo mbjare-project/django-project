@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from .forms import CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -10,6 +10,8 @@ import requests
 from .forms import UserUpdateForm, ProfileUpdateForm
 from django.contrib import messages
 from .utils import get_nifty_50_data, get_nifty_bank_data
+from .models import Post, Comment, Like
+from .forms import PostForm, CommentForm
 
 
 def home(request):
@@ -126,3 +128,75 @@ def nifty_bank_view(request):
     else:
         error = "Failed to retrieve Nifty Bank data."
         return render(request, 'nifty_bank.html', {'error': error})
+    
+    
+# Post Upload View
+@login_required
+def upload_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
+            return redirect('home')  # Redirect to the homepage
+    else:
+        form = PostForm()
+    return render(request, 'upload_post.html', {'form': form})
+
+# Comment View
+@login_required
+def add_comment(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+
+    if request.method == 'POST':
+        content = request.POST.get('content')
+        if content:
+            comment = Comment.objects.create(
+                post=post,
+                user=request.user,
+                content=content
+            )
+            comment.save()
+
+    return redirect('post_detail', post_id=post.id)
+
+# Like View
+@login_required
+def like_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if Like.objects.filter(user=request.user, post=post).exists():
+        # If already liked, unlike it
+        Like.objects.filter(user=request.user, post=post).delete()
+    else:
+        Like.objects.create(user=request.user, post=post)
+    return redirect('home')
+
+
+def home(request):
+    # Fetch all posts
+    posts = Post.objects.all().order_by('-created_at')
+
+    # Handle post submission
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_post = form.save(commit=False)
+            new_post.user = request.user  # Assign the current logged-in user
+            new_post.save()
+            return redirect('home')
+    else:
+        form = PostForm()
+
+    # Pass posts and the form to the template
+    context = {
+        'posts': posts,
+        'form': form,
+    }
+    return render(request, 'home.html', context)
+
+#shw post details
+
+def post_detail(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    return render(request, 'post_detail.html', {'post': post})

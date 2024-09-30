@@ -133,8 +133,11 @@ LOGOUT_REDIRECT_URL = 'home'
 
 
 # for  configure media settings
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 
 ALPHA_VANTAGE_API_KEY = 'D3VRGC4877B3SM87'

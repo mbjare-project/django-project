@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Profile
+from .models import Post, Comment
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}))
@@ -30,3 +31,17 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['bio', 'location', 'profile_image']
+        
+        
+        
+        #for add post upload feature
+        
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['content', 'image']  # Allow users to upload content and an image
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
