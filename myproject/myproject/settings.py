@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'myapp',  # Add your app here
     'widget_tweaks',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -141,3 +142,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 ALPHA_VANTAGE_API_KEY = 'D3VRGC4877B3SM87'
+
+
+#for bootsrap cripy form css
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
